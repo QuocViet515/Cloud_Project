@@ -1,0 +1,24 @@
+---
+# Remediate: Enable boot diagnostics on VM
+# Finding: AZ-VM-BOOTDIAG-001
+- name: Remediate VM Boot Diagnostics
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    resource_group: "{{ resource_group }}"
+    vm_name: "{{ vm_name | default(resource_name) }}"
+
+  tasks:
+    - name: Enable boot diagnostics with managed storage
+      command: >
+        az vm boot-diagnostics enable
+        --resource-group {{ resource_group }}
+        --name {{ vm_name }}
+      register: result
+      changed_when: result.rc == 0
+
+    - name: Log remediation
+      debug:
+        msg: "Boot diagnostics enabled on VM {{ vm_name }}"

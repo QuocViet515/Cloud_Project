@@ -1,0 +1,11 @@
+policies:
+  - name: storage-block-public-access
+    description: Block public blob access on Azure Storage Accounts
+    resource: azure.storage
+    filters:
+      - type: value
+        key: properties.allowBlobPublicAccess
+        value: true
+    actions:
+      - type: set-public-access
+        value: false

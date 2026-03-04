@@ -1,0 +1,11 @@
+---
+# Ansible inventory for Azure remediation
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+  vars:
+    azure_subscription_id: "{{ lookup('env', 'AZURE_SUBSCRIPTION_ID') }}"
+    azure_client_id: "{{ lookup('env', 'AZURE_CLIENT_ID') }}"
+    azure_client_secret: "{{ lookup('env', 'AZURE_CLIENT_SECRET') }}"
+    azure_tenant_id: "{{ lookup('env', 'AZURE_TENANT_ID') }}"

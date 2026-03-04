@@ -1,0 +1,12 @@
+policies:
+  - name: storage-enable-encryption
+    description: Enable encryption on Azure Storage Accounts
+    resource: azure.storage
+    filters:
+      - type: value
+        key: properties.encryption.services.blob.enabled
+        value: false
+    actions:
+      - type: set-encryption
+        enabled: true
+        key-source: Microsoft.Storage

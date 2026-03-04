@@ -1,0 +1,19 @@
+policies:
+  - name: nsg-restrict-open-ports
+    description: Remove NSG rules that allow 0.0.0.0/0 to sensitive ports
+    resource: azure.networksecuritygroup
+    filters:
+      - type: ingress
+        Ports:
+          - 22
+          - 3389
+        OnlyPorts:
+          - 22
+          - 3389
+        Cidr: "0.0.0.0/0"
+    actions:
+      - type: close
+        ports:
+          - 22
+          - 3389
+        ip-protocol: tcp

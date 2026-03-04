@@ -1,0 +1,25 @@
+---
+# Remediate: Set storage account network ACL to Deny by default
+# Finding: AZST002
+- name: Remediate Storage Account Network ACL
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    resource_group: "{{ resource_group }}"
+    resource_name: "{{ resource_name }}"
+
+  tasks:
+    - name: Set default network action to Deny
+      command: >
+        az storage account update
+        --name {{ resource_name }}
+        --resource-group {{ resource_group }}
+        --default-action Deny
+      register: result
+      changed_when: result.rc == 0
+
+    - name: Log remediation success
+      debug:
+        msg: "Set default network action to Deny on {{ resource_name }}"

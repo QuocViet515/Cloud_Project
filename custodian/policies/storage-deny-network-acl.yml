@@ -1,0 +1,11 @@
+policies:
+  - name: storage-deny-network-acl
+    description: Set default network ACL to Deny on Azure Storage
+    resource: azure.storage
+    filters:
+      - type: value
+        key: properties.networkAcls.defaultAction
+        value: Allow
+    actions:
+      - type: set-network-rules
+        default-action: Deny

@@ -1,0 +1,23 @@
+---
+# Remediate: Enable Key Vault soft-delete
+# Finding: AZKV001
+- name: Remediate Key Vault Soft Delete
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    resource_name: "{{ resource_name }}"
+
+  tasks:
+    - name: Enable soft-delete on Key Vault
+      command: >
+        az keyvault update
+        --name {{ resource_name }}
+        --enable-soft-delete true
+      register: result
+      changed_when: result.rc == 0
+
+    - name: Log remediation
+      debug:
+        msg: "Soft-delete enabled on Key Vault {{ resource_name }}"
